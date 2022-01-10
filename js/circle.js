@@ -6,8 +6,8 @@ window.onload = function(){
     
     var inital_x = width/2,
         initial_y = height/2,
-        xradius = 450,
-        yradius = 250,
+        xradius = 250,
+        yradius = 150,
         xangle = 0,
         yangle = 0,
         xspeed = 0.1;

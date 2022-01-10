@@ -2,81 +2,81 @@ var vector = {
     _x: 1,
     _y: 0,
 
-    create: function(x, y){
+    create(x, y){
         var obj = Object.create(this);
         obj.setX(x);
         obj.setY(y);
         return obj;
     },
 
-    setX: function(value){
+    setX(value){
         this._x = value;
     },
 
-    getX: function(){
+    getX(){
         return this._x;
     },
 
-    setY: function(value){
+    setY(value){
         this._y = value;
     },
 
-    getY: function(){
+    getY(){
         return this._y;
     },
 
-    setAngle: function(angle){
+    setAngle(angle){
         var length = this.getLength();
         this._x = length * Math.cos(angle);
         this._y = length * Math.sin(angle); 
     },
 
-    getAngle: function(){
+    getAngle(){
         return Math.atan2(this._y, this._x);
     },
 
-    setLength: function(length){
+    setLength(length){
         var angle = this.getAngle();
         this._x = length * Math.cos(angle);
         this._y = length * Math.sin(angle); 
     },
 
-    getLength: function(){
+    getLength(){
         return Math.sqrt(this._x * this._x + this._y * this._y);
     },
 
-    add: function(v2){
+    add(v2){
         return vector.create(this._x + v2.getX(), this._y + v2.getY());
     },
 
-    subtract: function(v2){
+    subtract(v2){
         return vector.create(this._x - v2.getX(), this._y - v2.getY());
     },
 
-    multiply: function(val){
+    multiply(val){
         return vector.create(this._x * val, this._y * val);
     },
 
-    divide: function(val){
+    divide(val){
         return vector.create(this._x / val, this._y / val);
     },
 
-    addTo: function(v){
+    addTo(v){
         this._x += v.getX();
         this._y += v.getY();
     },
 
-    subtractTo: function(v){
+    subtractTo(v){
         this._x -= v.getX();
         this._y -= v.getY();
     },
 
-    multiplyBy: function(v){
+    multiplyBy(v){
         this._x *= v.getX();
         this._y *= v.getY();
     },
 
-    divideBy: function(v){
+    divideBy(v){
         this._x /= v.getX();
         this._y /= v.getY();
     }

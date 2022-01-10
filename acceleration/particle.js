@@ -12,6 +12,10 @@ particle = {
         return obj;
     },
 
+    accelerate(acc){
+        this.velocity.addTo(acc);
+    },
+
     update(){
         this.position.addTo(this.velocity);
     },
