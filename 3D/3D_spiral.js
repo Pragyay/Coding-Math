@@ -2,20 +2,13 @@ var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
-    fl = 300,
+    fl = 180,
     shapes = [],
-    shapesCount = 10,
-    centerZ = 1000,
+    shapesCount = 300,
+    centerZ = 2000,
     radius = 1000,
     baseAngle = 0,
     rotationSpeed = 0.01;
-
-function getRandomInt(min, max){
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
-    return Math.random() * (max-min)+min;
-}
 
 function zsort(objA, objB){
     return objB.z - objA.z;
@@ -30,14 +23,18 @@ function render(){
 
     for(let i = 0; i < shapesCount; i++){
         var shape = shapes[i];
+
         var perspective = fl/(fl+shape.z);
+        shape.alpha = perspective*2;
+        // console.log(perspective);
 
         context.save();
+        context.globalAlpha = shape.alpha;
         context.scale(perspective, perspective);
         
         context.beginPath();
-        context.fillStyle = shape.color;
-        context.rect(shape.x, shape.y, 200, 150);
+        context.fillStyle = "cyan";
+        context.arc(shape.x, shape.y, 40, 0, Math.PI)
         context.fill();
 
         context.fill();
@@ -51,16 +48,17 @@ function render(){
 };
 
 document.body.addEventListener("mousemove", function(event){
-    rotationSpeed = (event.clientX - width/2)*0.00005;
+    rotationSpeed = (event.clientX - width/2)*0.0002;
     // y_value = (event.clientY - height/2)*0.5;
 });
 
 
 for(let i=0;i<shapesCount;i++){ 
     let shape = {
-        y: -50,
-        angle: Math.PI*2 / shapesCount*i,
-        color: `hsl(${Math.random() * 360}, 50%, 50%)`
+        y: 2000-(4000/ shapesCount*i),
+        angle: i,
+        // color: `hsl(${Math.random() * 360}, 50%, 50%)`,
+        alpha: 1
     };
     shape.x = Math.cos(shape.angle+baseAngle)*radius;
     shape.z = centerZ + Math.sin(shape.angle+baseAngle)*radius;
