@@ -2,46 +2,42 @@ var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
-    fl = 180,
+    fl = 300,
     shapes = [],
     shapesCount = 300,
-    centerZ = 2000,
+    centerZ = 3000,
     radius = 1000,
     baseAngle = 0,
     rotationSpeed = 0.01;
 
-function zsort(objA, objB){
-    return objB.z - objA.z;
-}
 
 function render(){
     baseAngle += rotationSpeed;
 
-    // zsort to sort numerically, not by string
-    shapes.sort(zsort);
     context.clearRect(-width/2,-height/2,width,height);
 
+    context.beginPath();
+    context.strokeStyle = "white";
     for(let i = 0; i < shapesCount; i++){
         var shape = shapes[i];
-
         var perspective = fl/(fl+shape.z);
-        shape.alpha = perspective*2;
-        // console.log(perspective);
-
-        context.save();
-        context.globalAlpha = shape.alpha;
-        context.scale(perspective, perspective);
         
-        context.beginPath();
-        context.fillStyle = "cyan";
-        context.arc(shape.x, shape.y, 40, 0, Math.PI)
-        context.fill();
+        context.save();
+        context.scale(perspective, perspective);
+        context.translate(shape.x, shape.y);
+        
+        if(i==0){
+            context.moveTo(0,0);
+        }else{
+            context.lineTo(0,0);
+        }
 
         context.restore();
 
         shape.x = Math.cos(shape.angle+baseAngle)*radius;
         shape.z = centerZ + Math.sin(shape.angle+baseAngle)*radius;
     }
+    context.stroke();
     requestAnimationFrame(render);
 
 };
@@ -54,10 +50,8 @@ document.body.addEventListener("mousemove", function(event){
 
 for(let i=0;i<shapesCount;i++){ 
     let shape = {
-        y: 2000-(4000/ shapesCount*i),
-        angle: i,
-        // color: `hsl(${Math.random() * 360}, 50%, 50%)`,
-        alpha: 1
+        angle: 0.2 * i,
+        y: 2000 - 4000 / shapesCount * i +500
     };
     shape.x = Math.cos(shape.angle+baseAngle)*radius;
     shape.z = centerZ + Math.sin(shape.angle+baseAngle)*radius;
