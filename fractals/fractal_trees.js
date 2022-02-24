@@ -11,8 +11,8 @@ let p0 = {
         x: width/2,
         y: 20,
     },
-    branchAngle =  randomRange(0,Math.PI/2),
-    trunkRatio = 0.5;
+    // branchAngle =  randomRange(0,Math.PI/2),
+    trunkRatio = 0.33;
 
 function randomRange(min, max){
     return Math.random()*(max-min) + min;
@@ -30,12 +30,12 @@ function tree(p0,p1,limit){
             y: p0.y + dy*trunkRatio
         },
         pB = {
-            x: pA.x + branchLength * Math.cos(angle-branchAngle),
-            y: pA.y + branchLength * Math.sin(angle-branchAngle)
+            x: pA.x + branchLength * Math.cos(angle-randomRange(0, Math.PI/4)),
+            y: pA.y + branchLength * Math.sin(angle-randomRange(0, Math.PI/4))
         },
         pC = {
-            x: pA.x + branchLength * Math.cos(angle+branchAngle),
-            y: pA.y + branchLength * Math.sin(angle+branchAngle)
+            x: pA.x + branchLength * Math.cos(angle+randomRange(0, Math.PI/4)),
+            y: pA.y + branchLength * Math.sin(angle+randomRange(0, Math.PI/4))
         };
     
     ctx.strokeStyle = "white";
@@ -57,4 +57,4 @@ function tree(p0,p1,limit){
     }
 }
 
-tree(p0, p1, 8);
+tree(p0, p1, 12);
