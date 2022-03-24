@@ -1,7 +1,8 @@
 let canvas = document.getElementById("canvas"),
     context = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
-    height = canvas.height = window.innerHeight;
+    height = canvas.height = window.innerHeight,
+    angle = Math.sinh(0.04);
 
 let rules = [
     //stem
@@ -50,6 +51,10 @@ let rules = [
     },
 ]
 
+function norm(value, min, max){
+    return (value-min)/(max-min);
+}
+
 context.translate(width/2, height);
 
 let x = Math.random(),
@@ -58,7 +63,17 @@ let x = Math.random(),
 iterate();
 
 function iterate(){
-    for(let i=0; i<100; i++){
+    context.clearRect(-width/2, -height, width, height);
+
+    angle += 0.02;
+    let a = angle;
+    
+    // rules[1].c = Math.sin(a);
+    // rules[1].b = Math.sin(a)*0.3;
+    rules[1].a = Math.sin(a)*0.85;
+
+    // console.log(rules[1].a);
+    for(let i=0; i<20000; i++){
         let rule = getRule(),
             x1 = x * rule.a + y * rule.b + rule.tx,
             y1 = x * rule.c + y * rule.d + rule.ty;
@@ -87,5 +102,5 @@ function getRule(){
 // }
 function plot(x, y){
     context.fillStyle = "green";
-    context.fillRect(x * 60, -y * 60, 1, 1);
+    context.fillRect(x * 60, -y * 60, 2, 2);
 }

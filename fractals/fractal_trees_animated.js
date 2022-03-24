@@ -29,8 +29,8 @@ draw();
 
 function draw() {
     context.clearRect(0, 0, width, height);
-    branchAngleA = Math.cos(branch_angle_A += increment_a) * Math.PI/6;
-    branchAngleB = Math.cos(branch_angle_b += increment_b) * Math.PI/6;
+    branchAngleA = Math.cos(branch_angle_A += increment_a) * 3*Math.PI/4;
+    branchAngleB = Math.cos(branch_angle_b += increment_b) * 3*Math.PI/4;
 
     tree(p0, p1, 8);
     requestAnimationFrame(draw);
